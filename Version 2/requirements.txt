@@ -1,0 +1,22 @@
+# Currently required (fairness/, evaluation/ math+metrics modules — pure NumPy/SciPy/scikit-learn)
+numpy>=1.24
+scipy>=1.10
+scikit-learn>=1.3            # macro-F1, leakage linear probe (evaluation/metrics.py, evaluation/leakage.py)
+pytest>=7.0
+
+# Required for datasets/download_*.py, build_*.py
+datasets>=2.18
+pyyaml>=6.0
+fasttext-langdetect>=1.0.5   # or swap in py3langid via datasets/language_filter.py's LanguageDetector protocol
+
+# Required for model/, datasets/dataloaders.py, datasets/tokenizer.py, optimization/ (not runnable in this sandbox — no torch, no network, no GPU)
+torch>=2.1
+transformers>=4.38
+sentencepiece>=0.1.99        # needed by mT5's tokenizer
+accelerate>=0.27
+
+# Not yet needed by any implemented module, but required once these exist:
+# matplotlib>=3.8            # visualization/ (not yet written)
+# pandas>=2.1                # table generation (not yet written)
+# seqeval                    # optional cross-check for evaluation/metrics.py's span_f1 (not required — a dependency-free equivalent is already implemented and tested)
+# sacremoses                 # baselines that need MT-based back-translation (not yet written)
