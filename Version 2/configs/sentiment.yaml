@@ -1,0 +1,38 @@
+# Sentiment task config. Merged with configs/mt5.yaml (or xlmr.yaml) at
+# CLI invocation time -- see scripts/train.py's config-merging logic.
+task: sentiment
+
+data:
+  train_path: data/processed/sentiment/train.jsonl
+  validation_path: data/processed/sentiment/validation.jsonl
+  test_path: data/processed/sentiment/test.jsonl
+  # Paired counterfactual data (datasets/build_counterfactual_pairs.py's
+  # output), used for the fairness loss term during training and for
+  # BTS/CCR/DPG during evaluation. Optional: training can proceed on
+  # `train_path` alone with the fairness term disabled if this is absent.
+  train_pairs_path: data/processed/sentiment/train_pairs.jsonl
+  num_labels: 3
+
+trainer:
+  # Sec 5.2: "batch size of 128, and learning rate of 5e-5"
+  batch_size: 128
+  learning_rate: 5.0e-5
+  num_epochs: 3
+  use_amp: true            # Sec 5.2: BF16 precision
+
+  # Eq. 11-14, 17-18: fairness controller
+  tau: 0.40
+  eta_lambda: 0.05
+  lambda_init: 0.20
+  lambda_min: 0.05
+  lambda_max: 1.00
+
+  # Algorithm 3: IBADR
+  ibadr_refresh_interval: 500
+  ibadr_selection_ratio: 0.10
+
+  log_every: 50
+
+checkpoint:
+  output_dir: checkpoints/sentiment
+  save_every_epoch: true

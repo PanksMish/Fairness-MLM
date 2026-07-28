@@ -1,0 +1,267 @@
+# Default configuration for ADAPT-BTS dataset building and training.
+#
+# IMPORTANT: the manuscript states experiments cover "101 languages" and
+# gives per-family counts (Fig. 1b: 38 Indo-European, 18 Niger-Congo, 14
+# Sino-Tibetan, 12 Afroasiatic, 11 Austronesian, 8 Dravidian = 101 total)
+# and per-resource-tier counts (Table 2: HR=18, MR=37, LR=46), but does
+# NOT publish the full list of all 101 ISO language codes anywhere in the
+# text. Table 8 (Appendix B) only lists ~85 example languages as a
+# representative sample, not the complete set.
+#
+# The list below is a STARTING POINT built from Table 8's examples plus
+# WikiAnn/XTREME-covered languages, categorized by the Sec 3.1 thresholds.
+# It is NOT guaranteed to reproduce the manuscript's exact 101-language
+# set or family/resource-tier breakdown -- you should audit and adjust
+# this list (particularly resource-tier assignments, which depend on
+# actual CC100 token counts you'd need to measure yourself per
+# resource_category() in datasets/language_filter.py) before treating
+# results as comparable to the paper's Table 2/5/8.
+
+languages:
+  # High-resource (paper: n=18)
+  high_resource:
+    - en  # English
+    - de  # German
+    - fr  # French
+    - es  # Spanish
+    - it  # Italian
+    - pt  # Portuguese
+    - ru  # Russian
+    - zh  # Chinese
+    - ja  # Japanese
+    - ko  # Korean
+    - nl  # Dutch
+    - sv  # Swedish
+    - pl  # Polish
+    - ar  # Arabic
+    - tr  # Turkish
+    - vi  # Vietnamese
+    - th  # Thai
+    - id  # Indonesian
+
+  # Medium-resource (paper: n=37) -- partial list, extend as needed
+  medium_resource:
+    - hi  # Hindi
+    - bn  # Bengali
+    - ur  # Urdu
+    - el  # Greek
+    - cs  # Czech
+    - ro  # Romanian
+    - hu  # Hungarian
+    - fi  # Finnish
+    - ms  # Malay
+    - tl  # Filipino/Tagalog
+    - uk  # Ukrainian
+    - sr  # Serbian
+    - bg  # Bulgarian
+    - sk  # Slovak
+    - hr  # Croatian
+    - he  # Hebrew
+    - ta  # Tamil
+    - te  # Telugu
+    - mr  # Marathi
+    - gu  # Gujarati
+    - kn  # Kannada
+    - ne  # Nepali
+    - si  # Sinhala
+    - fa  # Persian
+    - am  # Amharic
+    - sw  # Swahili
+    - zu  # Zulu
+    - xh  # Xhosa
+    - so  # Somali
+    - af  # Afrikaans
+    - is  # Icelandic
+    - lv  # Latvian
+    - lt  # Lithuanian
+    - et  # Estonian
+    - kk  # Kazakh
+    - uz  # Uzbek
+    - ka  # Georgian
+
+  # Low-resource (paper: n=46)
+  low_resource:
+    - eu  # Basque
+    - gl  # Galician
+    - cy  # Welsh
+    - ga  # Irish
+    - mt  # Maltese
+    - lb  # Luxembourgish
+    - ha  # Hausa
+    - yo  # Yoruba
+    - ig  # Igbo
+    - sn  # Shona
+    - km  # Khmer
+    - lo  # Lao
+    - mn  # Mongolian
+    - ti  # Tigrinya
+    - ps  # Pashto
+    - ku  # Kurdish
+    - sq  # Albanian
+    - bs  # Bosnian
+    - mk  # Macedonian
+    - hy  # Armenian
+    - az  # Azerbaijani
+    - be  # Belarusian
+    - ca  # Catalan
+    # --- extended to close the gap toward n=46 (2026-07 update) ---
+    # All 23 below are real ISO 639-1 codes, verified present in
+    # datasets/download_cc100.py's CC100_VALID_CODES list (required,
+    # since these languages have no real labeled sentiment source and
+    # depend entirely on datasets/build_weak_sentiment.py's CC100 +
+    # NRC-lexicon weak-supervision pipeline -- see README's warning
+    # section on what "low-resource" means for these specifically:
+    # real unlabeled text, WEAK heuristic labels, not gold annotations).
+    - as  # Assamese (Indo-Aryan)
+    - br  # Breton (Celtic)
+    - ff  # Fulah (Niger-Congo)
+    - fy  # Western Frisian (Germanic)
+    - gd  # Scottish Gaelic (Celtic)
+    - gn  # Guarani (Tupian)
+    - ht  # Haitian Creole
+    - jv  # Javanese (Austronesian)
+    - ky  # Kyrgyz (Turkic)
+    - lg  # Luganda (Niger-Congo)
+    - li  # Limburgish (Germanic)
+    - ln  # Lingala (Niger-Congo)
+    - mg  # Malagasy (Austronesian)
+    - ml  # Malayalam (Dravidian)
+    - my  # Burmese (Sino-Tibetan)
+    - om  # Oromo (Cushitic/Afroasiatic)
+    - or  # Odia (Indo-Aryan)
+    - pa  # Punjabi (Indo-Aryan)
+    - qu  # Quechua (Quechuan)
+    - sa  # Sanskrit (Indo-Aryan)
+    - sd  # Sindhi (Indo-Aryan)
+    - su  # Sundanese (Austronesian)
+    - wo  # Wolof (Niger-Congo)
+
+  # Flattened union used by default. Override in your own config if you
+  # need a different / exact 101-language set.
+  all:
+    - en
+    - de
+    - fr
+    - es
+    - it
+    - pt
+    - ru
+    - zh
+    - ja
+    - ko
+    - nl
+    - sv
+    - pl
+    - ar
+    - tr
+    - vi
+    - th
+    - id
+    - hi
+    - bn
+    - ur
+    - el
+    - cs
+    - ro
+    - hu
+    - fi
+    - ms
+    - tl
+    - uk
+    - sr
+    - bg
+    - sk
+    - hr
+    - he
+    - ta
+    - te
+    - mr
+    - gu
+    - kn
+    - ne
+    - si
+    - fa
+    - am
+    - sw
+    - zu
+    - xh
+    - so
+    - af
+    - is
+    - lv
+    - lt
+    - et
+    - kk
+    - uz
+    - ka
+    - eu
+    - gl
+    - cy
+    - ga
+    - mt
+    - lb
+    - ha
+    - yo
+    - ig
+    - sn
+    - km
+    - lo
+    - mn
+    - ti
+    - ps
+    - ku
+    - sq
+    - bs
+    - mk
+    - hy
+    - az
+    - be
+    - ca
+    - as
+    - br
+    - ff
+    - fy
+    - gd
+    - gn
+    - ht
+    - jv
+    - ky
+    - lg
+    - li
+    - ln
+    - mg
+    - ml
+    - my
+    - om
+    - or
+    - pa
+    - qu
+    - sa
+    - sd
+    - su
+    - wo
+
+  # WikiAnn/XTREME does not cover every language in `all`; NER should be
+  # restricted to whatever download_wikiann.py's --languages run actually
+  # confirms is available (it logs skipped languages to
+  # data/processed/ner/_missing_languages.json). Sec 5.2: "NER evaluation
+  # is performed only on the subset of languages present in the
+  # XTREME/WikiAnn dataset."
+  ner_subset: null  # set to null to mean "use `all`, minus whatever WikiAnn is missing"
+
+paths:
+  raw_dir: data/raw
+  cache_dir: data/cache
+  sentiment_processed: data/processed/sentiment
+  ner_processed: data/processed/ner
+
+split:
+  train: 0.8
+  validation: 0.1
+  test: 0.1
+  seed: 42
+
+resource_thresholds:
+  # Sec 3.1: HR: T_l > 1e9, MR: 1e8 < T_l <= 1e9, LR: T_l <= 1e8
+  hr_min_tokens: 1.0e9
+  mr_min_tokens: 1.0e8

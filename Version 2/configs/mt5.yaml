@@ -1,0 +1,7 @@
+# Backbone config for mT5-base, matching Sec 5.2: "All models are
+# trained using the mT5-base architecture."
+model:
+  name_or_path: google/mt5-base
+  max_seq_length: 128
+  freeze_embeddings: false
+  dropout: 0.1

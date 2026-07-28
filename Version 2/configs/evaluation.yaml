@@ -1,0 +1,7 @@
+# Evaluation-time config for scripts/evaluate.py.
+evaluation:
+  batch_size: 128
+  compute_leakage_probe: true
+  leakage_test_size: 0.2
+  leakage_seed: 42
+  output_report_path: outputs/evaluation_report.json

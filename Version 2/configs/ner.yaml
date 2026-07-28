@@ -1,0 +1,39 @@
+# NER task config. WikiAnn data is stored per-language
+# (data/processed/ner/{lang}/{split}.jsonl, see
+# datasets/download_wikiann.py) rather than as one merged file, since
+# languages are evaluated both individually (Table 8) and pooled
+# (Table 5's global Span-F1) -- scripts/train.py handles building a
+# CombinedDataset over the language list at load time.
+task: ner
+
+data:
+  ner_root_dir: data/processed/ner
+  languages: null   # null = use configs/default_config.yaml's languages.ner_subset
+  num_labels: 7      # len(WIKIANN_TAGS): O, B-PER, I-PER, B-ORG, I-ORG, B-LOC, I-LOC
+  # Paired counterfactual data (datasets/build_ner_counterfactual_pairs.py's
+  # output). Same optional-fairness-term pattern as sentiment.yaml.
+  train_pairs_path: data/processed/ner/en/train_pairs.jsonl
+  train_path: data/processed/ner/en/train.jsonl
+  validation_path: data/processed/ner/en/validation.jsonl
+  test_path: data/processed/ner/en/test.jsonl
+
+trainer:
+  batch_size: 128
+  learning_rate: 5.0e-5
+  num_epochs: 3
+  use_amp: true
+
+  tau: 0.40
+  eta_lambda: 0.05
+  lambda_init: 0.20
+  lambda_min: 0.05
+  lambda_max: 1.00
+
+  ibadr_refresh_interval: 500
+  ibadr_selection_ratio: 0.10
+
+  log_every: 50
+
+checkpoint:
+  output_dir: checkpoints/ner
+  save_every_epoch: true

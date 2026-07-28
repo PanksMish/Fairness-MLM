@@ -1,0 +1,9 @@
+# Alternative backbone config. The manuscript's Table 5 results use
+# mT5-base exclusively (Sec 5.2) -- this exists for anyone wanting to
+# check whether ADAPT-BTS's gains are backbone-specific, an ablation the
+# manuscript itself does not report (see model/xlmr.py's docstring).
+model:
+  name_or_path: xlm-roberta-base
+  max_seq_length: 128
+  freeze_embeddings: false
+  dropout: 0.1

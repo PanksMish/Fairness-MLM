@@ -1,0 +1,15 @@
+# Ablation toggles, matching the components removed in Fig. 11(b) / 18 /
+# 19's ablation study ("-CDA", "-Filtering", "-FAPC", "-IBADR" variants).
+# scripts/train.py reads these flags to disable the corresponding
+# component; NOT wired up automatically by optimization/trainer.py
+# itself (which always assumes all components are active) -- ablation
+# variants need the training script to conditionally skip
+# counterfactual augmentation / semantic filtering / controller updates
+# / IBADR refresh based on these flags. That conditional wiring is a
+# scripts/train.py responsibility once ablation runs are actually needed;
+# this file just defines the toggle vocabulary.
+ablation:
+  use_counterfactual_augmentation: true   # "-CDA" when false
+  use_semantic_filtering: true            # "-Filtering" when false (Eq. 9 gate bypassed)
+  use_adaptive_controller: true           # "-FAPC" when false (lambda fixed at lambda_init, no Eq. 13 updates)
+  use_ibadr: true                         # "-IBADR" when false (no Algorithm 3 refresh)
